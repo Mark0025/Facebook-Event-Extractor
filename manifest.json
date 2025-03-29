@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "152 Bar Events Extractor",
+  "version": "1.4.0",
+  "description": "Extract events from 152 Bar's Facebook page",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "downloads",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://www.facebook.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [{
+    "matches": ["*://*.facebook.com/*"],
+    "js": ["dist/content.js"],
+    "type": "module"
+  }],
+  "web_accessible_resources": [{
+    "resources": ["utils/*.js", "types.js", "messages.js", "extracted-events/*"],
+    "matches": ["https://www.facebook.com/*"]
+  }],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "minimum_chrome_version": "88",
+  "author": "aireinvestor.com",
+  "homepage_url": "https://aireinvestor.com",
+  "offline_enabled": true,
+  "options_page": "options.html",
+  "version_name": "1.4.0-beta"
+} 

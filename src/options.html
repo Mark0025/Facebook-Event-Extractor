@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>152 Bar Events Extractor - Options</title>
+  <style>
+    body {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    h1 {
+      color: #1a73e8;
+      margin-bottom: 20px;
+    }
+    
+    .section {
+      margin-bottom: 30px;
+    }
+    
+    .section h2 {
+      color: #333;
+      margin-bottom: 15px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #666;
+    }
+    
+    input[type="number"],
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    
+    button {
+      padding: 8px 16px;
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: #1557b0;
+    }
+    
+    .status {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 4px;
+      display: none;
+    }
+    
+    .status.success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    
+    .status.error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    
+    .info {
+      background-color: #e3f2fd;
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    
+    .info h3 {
+      margin-top: 0;
+      color: #1a73e8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>152 Bar Events Extractor - Options</h1>
+    
+    <div class="info">
+      <h3>About</h3>
+      <p>Version: <span id="version"></span></p>
+      <p>This extension helps you extract events from 152 Bar's Facebook page.</p>
+    </div>
+    
+    <div class="section">
+      <h2>Extraction Settings</h2>
+      
+      <div class="form-group">
+        <label for="batchSize">Batch Size:</label>
+        <input type="number" id="batchSize" min="1" max="100" value="50">
+        <small>Number of events to process in each batch (1-100)</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="concurrentLimit">Concurrent Requests:</label>
+        <input type="number" id="concurrentLimit" min="1" max="5" value="2">
+        <small>Number of concurrent event requests (1-5)</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="delayMin">Minimum Delay (seconds):</label>
+        <input type="number" id="delayMin" min="1" max="10" value="3">
+        <small>Minimum delay between requests (1-10 seconds)</small>
+      </div>
+      
+      <div class="form-group">
+        <label for="delayMax">Maximum Delay (seconds):</label>
+        <input type="number" id="delayMax" min="1" max="20" value="7">
+        <small>Maximum delay between requests (1-20 seconds)</small>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>Storage</h2>
+      
+      <div class="form-group">
+        <button id="clearStorage">Clear All Stored Events</button>
+        <div id="storageStatus" class="status"></div>
+      </div>
+      
+      <div class="form-group">
+        <button id="exportEvents">Export Events to JSON</button>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>About</h2>
+      <p>Created by <a href="https://aireinvestor.com" target="_blank">aireinvestor.com</a></p>
+      <p>For support or feedback, please visit our <a href="https://aireinvestor.com/support" target="_blank">support page</a>.</p>
+    </div>
+  </div>
+  
+  <script src="options.js"></script>
+</body>
+</html> 

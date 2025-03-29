@@ -1,0 +1,217 @@
+# Chrome Extension Development Best Practices
+
+## Architecture & Structure
+- Follow a modular architecture with clear separation of concerns
+- Use TypeScript for better type safety and developer experience
+- Implement proper error handling and logging throughout the extension
+- Keep background scripts lightweight and focused on core functionality
+- Use content scripts for DOM manipulation and page interaction
+- Implement proper state management (e.g., Redux, MobX) for complex state
+
+## Performance
+- Minimize DOM operations in content scripts
+- Use efficient data structures and algorithms
+- Implement proper caching mechanisms
+- Lazy load components and resources when possible
+- Monitor memory usage and prevent memory leaks
+- Use Chrome's performance APIs for monitoring
+
+## Security
+- Follow the principle of least privilege in manifest.json
+- Sanitize all user inputs and data
+- Use Content Security Policy (CSP) appropriately
+- Implement proper authentication and authorization
+- Store sensitive data securely using Chrome's storage API
+- Regular security audits and updates
+
+## User Experience
+- Design intuitive and responsive UI
+- Implement proper loading states and error messages
+- Follow Chrome's Material Design guidelines
+- Ensure accessibility compliance (ARIA, keyboard navigation)
+- Provide clear feedback for user actions
+- Implement proper offline support
+
+## Testing & Quality
+- Write comprehensive unit tests
+- Implement end-to-end tests for critical flows
+- Use Chrome's testing APIs
+- Regular code reviews and linting
+- Maintain consistent code style
+- Document complex logic and APIs
+
+## Development Workflow
+- Use modern build tools (webpack, rollup)
+- Implement hot reloading for development
+- Use source maps for debugging
+- Regular dependency updates
+- Version control best practices
+- Automated deployment pipeline
+
+## Chrome Extension Specific
+- Follow manifest v3 guidelines
+- Use service workers for background tasks
+- Implement proper message passing between components
+- Use Chrome's APIs efficiently
+- Handle extension lifecycle events properly
+- Implement proper update mechanisms
+
+## Code Style
+- Use meaningful variable and function names
+- Write self-documenting code
+- Keep functions small and focused
+- Use proper TypeScript types and interfaces
+- Follow consistent naming conventions
+- Write clear and concise comments
+
+## Error Handling
+- Implement proper error boundaries
+- Use structured error logging
+- Handle network errors gracefully
+- Implement retry mechanisms where appropriate
+- Provide user-friendly error messages
+- Monitor and track errors in production
+
+## Documentation
+- Maintain up-to-date README
+- Document API endpoints and interfaces
+- Include setup and installation instructions
+- Document known issues and limitations
+- Provide usage examples
+- Keep changelog updated
+
+# Chrome Extension Development Rules
+
+## Service Worker Rules
+- Service workers must be in the root dist directory
+- Service workers cannot use TypeScript directly, must be compiled to JS
+- Service worker files must end in .js
+- Service worker imports must be relative to the dist directory
+- Service worker must be registered in manifest.json with type: "module"
+- No duplicate function declarations in service workers
+
+## Module Import/Export Rules
+- All import statements must use relative paths starting with './'
+- All import statements must include file extension in production (.js)
+- Content scripts must be declared as type: "module" in manifest.json
+- Background scripts must be declared as type: "module" in manifest.json
+- Web accessible resources must include all imported files
+- No circular dependencies between modules
+
+## Build Process Rules
+- TypeScript files must be compiled to JavaScript before distribution
+- Source maps must be generated for debugging
+- All required files must be copied to dist directory
+- Maintain the same directory structure in dist as src
+- Include all dependencies in the dist directory
+- Verify file paths in manifest.json point to dist directory
+
+## File Structure Rules
+```
+dist/
+  ├── assets/
+  │   └── icons/
+  ├── utils/
+  │   └── *.js
+  ├── background.js
+  ├── content.js
+  ├── popup.js
+  ├── popup.html
+  ├── manifest.json
+  └── options.html
+```
+
+## TypeScript Build Rules
+- Set "module": "ES2020" in tsconfig.json
+- Set "target": "ES2020" in tsconfig.json
+- Include "types": ["chrome"] in tsconfig.json
+- Use proper file extensions in imports (.js for output)
+- Enable sourceMap in tsconfig.json
+- Set moduleResolution to "node"
+
+## Background Service Worker Rules
+```javascript
+// background.js template
+// No imports at top level unless using type: "module"
+// Use only vanilla JS features
+// Keep service worker lightweight
+// Handle installation and activation events
+// Use proper message passing
+```
+
+## Content Script Rules
+```javascript
+// content.js template
+// Declare as type: "module" in manifest
+// Use relative imports
+// Handle DOM operations safely
+// Clean up event listeners
+// Use proper message passing
+```
+
+## Manifest Rules
+```json
+{
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [{
+    "js": ["content.js"],
+    "type": "module"
+  }],
+  "web_accessible_resources": [{
+    "resources": [
+      "utils/*.js",
+      "types.js",
+      "messages.js"
+    ]
+  }]
+}
+```
+
+## Build Script Rules
+```json
+{
+  "scripts": {
+    "prebuild": "rm -rf dist && mkdir -p dist/assets dist/utils",
+    "build": "tsc && cp -r src/assets dist/ && cp src/*.html dist/",
+    "postbuild": "node scripts/fix-imports.js"
+  }
+}
+```
+
+## Debug Rules
+- Use Chrome's built-in debugging tools
+- Enable source maps for better debugging
+- Check service worker console in chrome://extensions
+- Monitor network requests for module loading
+- Watch for CSP violations
+- Log service worker lifecycle events
+
+## Common Fixes
+1. Service Worker Registration Failed (Status 15):
+   - Ensure background.js is in dist root
+   - Add type: "module" to background in manifest
+   - Use .js extensions in imports
+   - Keep service worker lightweight
+
+2. Import Outside Module:
+   - Add type: "module" to script tags
+   - Add type: "module" to content_scripts
+   - Use proper relative paths
+   - Include file extensions
+
+3. Duplicate Declarations:
+   - Check for multiple imports
+   - Avoid global namespace pollution
+   - Use proper module encapsulation
+   - Remove duplicate function declarations
+
+## Testing Rules
+- Test in both development and production
+- Verify module loading in production
+- Check service worker registration
+- Monitor memory usage
+- Test message passing
+- Verify content script injection 
